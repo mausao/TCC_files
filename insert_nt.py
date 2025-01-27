@@ -55,7 +55,8 @@ def inserir_nt(sequencia, posicoes, nucleotideos):
         for j in range(i + 1, len(posicoes)):
             novo_inicio, novo_fim = map(int, posicoes[j].split("-"))
             if novo_inicio > inicio:
-                posicoes[j] = f"{novo_inicio + len(nucleotideo) - (fim - inicio + 1)}-{novo_fim + len(nucleotideo) - (fim - inicio)}"
+                deslocamento = len(nucleotideo) -  (fim - inicio + 1)
+                posicoes[j] = f"{novo_inicio + deslocamento}-{novo_fim + deslocamento}"
     return sequencia
 
 sequencia_modificada = inserir_nt(sequencia, posicoes_separadas, nucleotideos_separados)
