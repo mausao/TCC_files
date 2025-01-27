@@ -2,7 +2,10 @@ import io
 import os
 
 #Caminho do .fasta
-path_fasta = r"C:\Users\mmjam\Área de Trabalho\TCC_files\consensus.fasta"
+path_fasta = r"C:\Users\mmjam\Área de Trabalho\TCC_files\teste.fasta"
+
+#Caminho para o arquivo com inserções
+novo_path_fasta = r"C:\Users\mmjam\Área de Trabalho\TCC_files\teste_modificado.fasta"
 
 with open(path_fasta, "r") as arq:
     linhas = arq.readlines()
@@ -10,6 +13,8 @@ with open(path_fasta, "r") as arq:
 if not linhas:
     print("Arquivo vazio ou erro ao abrir o arquivo.")
     exit()
+
+sequencia = ''.join(linha.strip() for linha in linhas [1:])
 
 #Criação de um dicionário para armazenar as posições e os nucleotídeos
 try:
@@ -39,7 +44,24 @@ for i in range(len(posicoes_separadas)):
     except ValueError:
         print(f"Erro: posição inválida: {posicoes_separadas[i]}. Use apenas números separados por hífen.")
         exit()
-    
-print("Teste. Dicionario de posicoes e nucleotideos:")
-for posicao, nucleotideo in pos_nt.items():
-    print(f"{posicao}: {nucleotideo}")
+
+#Função para inserir os nucleotídeos na sequência
+def inserir_nt(sequencia, posicoes, nucleotideos):
+    for i in range(len(posicoes)):
+        inicio, fim = map(int, posicoes[i].split("-"))
+        nucleotideo = nucleotideos[i]
+        #inserindo nucleotídeos na posição fornecida
+        sequencia = sequencia[:inicio-1] + nucleotideo + sequencia[fim:]
+        for j in range(i + 1, len(posicoes)):
+            novo_inicio, novo_fim = map(int, posicoes[j].split("-"))
+            if novo_inicio > inicio:
+                posicoes[j] = f"{novo_inicio + len(nucleotideo) - (fim - inicio + 1)}-{novo_fim + len(nucleotideo) - (fim - inicio)}"
+    return sequencia
+
+sequencia_modificada = inserir_nt(sequencia, posicoes_separadas, nucleotideos_separados)
+
+with open(novo_path_fasta, "w") as novo_arq:
+    novo_arq.write(linhas[0])
+    novo_arq.write(sequencia_modificada)
+
+print(f"Sequência modificada salva em: {novo_path_fasta}")
