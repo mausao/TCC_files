@@ -2,7 +2,7 @@ import io
 import os
 
 #Caminho do .fasta
-path_fasta = r"C:\Users\mmjam\Área de Trabalho\TCC_files\TCC_files\consensus.fasta"
+path_fasta = r"C:\Users\mmjam\Área de Trabalho\TCC_files\consensus.fasta"
 
 with open(path_fasta, "r") as arq:
     linhas = arq.readlines()
