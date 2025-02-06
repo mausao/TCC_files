@@ -1,2 +1,2 @@
 # TCC_files
-Scripts utilizados para o tratamentos de dados de Neophysopella tropicalis
+Script insert_nt.py utilizado para tratamento de inserções em sequências de DNA. Para utilizá-lo basta executar com o arquivo .fasta na mesma pasta (alterar o nome no começo do script) e seguir as exigências: primeiro informar ao script às coordenadas das inserções na formatação XX-XX (quantas vezes quiser/em quantas coordenadas existirem inserções) e depois a quantidade de nucleotídeos que deseja adicionar separados por espaços (AAA T GG C A) de forma que a quantidade de nucleotídeos inserida é a mesma que a informada no input.
